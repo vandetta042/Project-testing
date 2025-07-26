@@ -1,0 +1,41 @@
+body {
+    background-color: rgb(51, 175, 224);
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+}
+
+.SignIn {
+    max-width: 400px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #000000;
+
+}
+
+h2 {
+    text-align: center;
+}
+
+input[type="text"], input[type="password"] {
+    width: 97%;
+    padding: 8px;
+    margin: 8px 0 16px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+button {
+    width: 102%;
+    padding: 10px;
+    background: rgb(51, 175, 224);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: rgb(9, 51, 68);
+}
