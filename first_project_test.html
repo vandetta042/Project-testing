@@ -2,119 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Simple Auth App</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; }
-        .container { max-width: 400px; margin: 40px auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 2px 8px #ccc; }
-        h2 { text-align: center; }
-        input[type="text"], input[type="password"], input[type="email"] {
-            width: 100%; padding: 8px; margin: 8px 0 16px 0; border: 1px solid #ccc; border-radius: 4px;
-        }
-        button { width: 100%; padding: 10px; background: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
-        button:hover { background: #0056b3; }
-        .link { color: #007bff; cursor: pointer; text-decoration: underline; display: block; margin: 12px 0; text-align: center; }
-        .dashboard { text-align: center; }
-        .profile { margin-top: 24px; padding: 16px; background: #f9f9f9; border-radius: 6px; }
-    </style>
+    <title>Intriguing Login & Dashboard</title>
+    <link rel="stylesheet" href="first_p.css">
+    <script src="first_p.js" defer></script>
 </head>
 <body>
-    <div class="container" id="login-page">
-        <h2>Login</h2>
-        <input type="text" id="login-username" placeholder="Username" required>
-        <input type="password" id="login-password" placeholder="Password" required>
-        <button onclick="login()">Login</button>
-        <span class="link" onclick="showSignUp()">Don't have an account? Sign Up</span>
-    </div>
+    <div class="container">
+        <!-- Login Page -->
+        <section id="login-section" class="card">
+            <h2>Login</h2>
+            <form id="login-form">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+                <p>Don't have an account? <a href="#" onclick="showSignup()">Sign up</a></p>
+            </form>
+        </section>
 
-    <div class="container" id="signup-page" style="display:none;">
-        <h2>Sign Up</h2>
-        <input type="text" id="signup-username" placeholder="Username" required>
-        <input type="email" id="signup-email" placeholder="Email" required>
-        <input type="password" id="signup-password" placeholder="Password" required>
-        <button onclick="signUp()">Sign Up</button>
-        <span class="link" onclick="showLogin()">Already have an account? Login</span>
-    </div>
+        <!-- Signup Page -->
+        <section id="signup-section" class="card" style="display:none;">
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <input type="text" name="new_username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="new_password" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
+                <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>
+            </form>
+        </section>
 
-    <div class="container" id="dashboard-page" style="display:none;">
-        <div class="dashboard">
-            <h2>Dashboard</h2>
-            <p>Welcome, <span id="dashboard-username"></span>!</p>
-            <button onclick="showProfile()">Profile</button>
-            <button onclick="logout()">Logout</button>
-        </div>
-        <div class="profile" id="profile-section" style="display:none;">
-            <h3>Profile</h3>
-            <p><strong>Username:</strong> <span id="profile-username"></span></p>
-            <p><strong>Email:</strong> <span id="profile-email"></span></p>
-            <button onclick="hideProfile()">Close Profile</button>
-        </div>
+        <!-- Dashboard -->
+        <section id="dashboard-section" style="display:none;">
+            <div class="dashboard-layout">
+                <!-- Sidebar/Profile -->
+                <aside class="sidebar">
+                    <div class="profile">
+                        <img src="profile.png" alt="Profile Picture" class="profile-pic">
+                        <h3 id="profile-name">User Name</h3>
+                        <p id="profile-email">user@email.com</p>
+                        <button onclick="showLogin()">Logout</button>
+                    </div>
+                    <nav>
+                        <ul>
+                            <li><a href="#" class="active">Dashboard</a></li>
+                            <li><a href="#">Settings</a></li>
+                            <li><a href="#">Help</a></li>
+                        </ul>
+                    </nav>
+                </aside>
+                <!-- Main Dashboard Content -->
+                <main class="dashboard-main">
+                    <h2>Welcome to Your Dashboard</h2>
+                    <div class="stats">
+                        <div class="stat-card">
+                            <h3>Projects</h3>
+                            <p>12</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Tasks</h3>
+                            <p>34</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Messages</h3>
+                            <p>5</p>
+                        </div>
+                    </div>
+                    <div class="recent-activity">
+                        <h3>Recent Activity</h3>
+                        <ul>
+                            <li>Logged in</li>
+                            <li>Completed Task #23</li>
+                            <li>Updated Profile</li>
+                        </ul>
+                    </div>
+                </main>
+            </div>
+        </section>
     </div>
-
-    <script>
-        // Simple local storage user management (for demo only)
-        function showLogin() {
-            document.getElementById('login-page').style.display = '';
-            document.getElementById('signup-page').style.display = 'none';
-            document.getElementById('dashboard-page').style.display = 'none';
-        }
-        function showSignUp() {
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('signup-page').style.display = '';
-            document.getElementById('dashboard-page').style.display = 'none';
-        }
-        function showDashboard(username) {
-            document.getElementById('login-page').style.display = 'none';
-            document.getElementById('signup-page').style.display = 'none';
-            document.getElementById('dashboard-page').style.display = '';
-            document.getElementById('dashboard-username').textContent = username;
-            hideProfile();
-        }
-        function showProfile() {
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            document.getElementById('profile-section').style.display = '';
-            document.getElementById('profile-username').textContent = user.username;
-            document.getElementById('profile-email').textContent = user.email;
-        }
-        function hideProfile() {
-            document.getElementById('profile-section').style.display = 'none';
-        }
-        function login() {
-            const username = document.getElementById('login-username').value;
-            const password = document.getElementById('login-password').value;
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const user = users.find(u => u.username === username && u.password === password);
-            if (user) {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                showDashboard(user.username);
-            } else {
-                alert('Invalid credentials!');
-            }
-        }
-        function signUp() {
-            const username = document.getElementById('signup-username').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            let users = JSON.parse(localStorage.getItem('users') || '[]');
-            if (users.find(u => u.username === username)) {
-                alert('Username already exists!');
-                return;
-            }
-            const user = { username, email, password };
-            users.push(user);
-            localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            showDashboard(username);
-        }
-        function logout() {
-            localStorage.removeItem('currentUser');
-            showLogin();
-        }
-        // Auto-login if user is already logged in
-        window.onload = function() {
-            const user = JSON.parse(localStorage.getItem('currentUser'));
-            if (user) showDashboard(user.username);
-            else showLogin();
-        }
-    </script>
 </body>
 </html>
